@@ -6,54 +6,34 @@ War
 Game Class
 */
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import javax.swing.*; //needed for Swing classes
+import java.awt.*; 
+import java.awt.event.*; //needed for ActionListener interface
 
-public class War
+public class War extends JFrame
 {
    //declare object variables
    QueueReferenceBased queue1; 
    QueueReferenceBased queue2;
    Deck1 deck; 
-   
-  
+   JButton flipButton;
+   JPanel panel;
+   JLabel label;
    
    //main method
    public static void main(String[] args) 
-   {
+   {  
+      War w = new War();
+      w.windowMethod();    
       
-      
-         War w = new War();
-         w.nonMain();
-      
-      
-      /*queue is empty
-      catch (QueueException e)
-      { 
-         System.out.println("ERROR");*/
-         
+        
    }//end main method
-
+   
+   
    public void nonMain()
    {
       try 
       {
-      //GUI
-      final int WINDOW_WIDTH = 350;  //window width in pixels
-      final int WINDOW_HEIGHT = 250; //window height in pixels
-      
-      //create the window w/ label and size
-      JFrame window = new JFrame("A Game of War");
-      window.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-      
-      //specify what happens when close button is clicked
-      window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      
-      //display window
-      window.setVisible(true);
-      
-      
       //deal cards
       deal();
  
@@ -234,12 +214,77 @@ public class War
                   
    }//end flipCard1   
    
-   /*compareError method
-   public String compareError()
+   //GUI
+   public void windowMethod()
    {
-         if (!queue1.isEmpty())
-            return "Computer is out of cards--you've won the war!";  
-         else 
-            return "You are out of cards--you have lost the war!"; 
-   }//end compareError*/      
+      try 
+      {
+      final int WINDOW_WIDTH = 350;  //window width in pixels
+      final int WINDOW_HEIGHT = 250; //window height in pixels
+      
+      //create the window w/ label and size
+      JFrame window = new JFrame("A Game of War");
+      window.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+      
+      //specify what happens when close button is clicked
+      window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      
+      //build the panel and add it to the frame
+      buildPanel();
+      
+      // add the panel to the frame's content pane
+      window.add(panel);
+      
+      //display window
+      window.setVisible(true);
+      }
+      catch(QueueException e)
+      {}
+   }   
+   /** 
+      The buildPanel method adds labels and a button to the panel
+    */
+   private void buildPanel()
+   {
+      //Create a label.
+      label = new JLabel("Try your luck in war!");
+      
+      //Create a button with caption "Go to War!"  
+      flipButton = new JButton("Flip!");
+      
+      //Add an action listener to the button
+      flipButton.addActionListener(new FlipButtonListener());
+      
+      //Create a JPanel object and let the panel field reference it
+      panel = new JPanel();
+      
+      //Add the label and button components to the panel
+      panel.add(label);
+      panel.add(flipButton);   
+   }      
+   
+  /** 
+   FlipButtonLIstener is an action listener class for flipButton.
+  */
+  
+  private class FlipButtonListener implements ActionListener
+  {
+      /** 
+         The actionPerformed method executes when the user clicks on the flip button.
+         @param e The even object.
+      */
+   
+      public void actionPerformed(ActionEvent e)
+      {
+         try{
+         War w = new War();
+         w.nonMain();
+         String s = w.flipCard1();
+         //display the flip
+         JOptionPane.showMessageDialog(null, s);  
+         }
+         catch(QueueException f)
+         {} 
+      }
+  }//end private class   
 }//end class

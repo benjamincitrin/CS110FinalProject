@@ -10,7 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Graphics implements  ActionListener
+public class Graphics implements ActionListener
 {
     // Definition of global values and items that are part of the GUI.
     int playerScoreAmount = 0;
