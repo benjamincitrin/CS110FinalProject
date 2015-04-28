@@ -37,14 +37,14 @@ public class War extends JFrame
       //deal cards
       deal();
  
-      while (!queue1.isEmpty() && !queue2.isEmpty()) 
+      /*while (!queue1.isEmpty() && !queue2.isEmpty()) 
       { 
          
          //flip first card
          System.out.println(flipCard1());
   
 
-      }//end while loop   
+      }//end while loop*/   
       
       if(queue1.isEmpty())
       {
@@ -82,9 +82,12 @@ public class War extends JFrame
       }//end for loop 
    }//end deal method
    
-             
+   Card card3; 
+   Card card11;
+   Card card13;         
    public String flipCard1()
    {
+    do {
       Card card1 = (Card) queue1.dequeue();
       String string1 = card1.getRankAsString() + " of " + card1.getSuitAsString();
       Card card2 = (Card) queue2.dequeue();
@@ -106,9 +109,8 @@ public class War extends JFrame
        }  
       //war      
       else
-         System.out.println("WAR: " + string1 + " vs. " + string2);
          
-         Card card3 = (Card) queue1.dequeue();
+         card3 = (Card) queue1.dequeue();
          String string3 = card3.getRankAsString() + " of " + card3.getSuitAsString();
          Card card9 = (Card) queue1.dequeue(); //facedown card
          Card card4 = (Card) queue2.dequeue();
@@ -123,7 +125,8 @@ public class War extends JFrame
             queue1.enqueue(card4); //add card from war flip
             queue1.enqueue(card9); //add card from war flip
             queue1.enqueue(card10);
-            return "After war, " + string3 + " is greater than " + string3 + "--You win!";
+            return "WAR: " + string1 + " vs. " + string2 + "\n" +
+            "After war, " + string3 + " is greater than " + string4 + "--You win!";
           }
             
          if (card4.getRank() > card3.getRank())
@@ -134,12 +137,12 @@ public class War extends JFrame
             queue2.enqueue(card4); //add card from war flip 
             queue2.enqueue(card9);
             queue2.enqueue(card10);
-            return "After war, " + string4 + " is greater than " + string3 + "--CPU wins!";
+            return "WAR: " + string1 + " vs. " + string2 + "\n" +
+            "After war, " + string4 + " is greater than " + string3 + "--CPU wins!";
           }  
          //double war   
          else
-            System.out.println("DOUBLE WAR: " + string3 + " vs. " + string4);
-            Card card11 = (Card) queue1.dequeue(); //facedown card
+            card11 = (Card) queue1.dequeue(); //facedown card
             Card card5 = (Card) queue1.dequeue();
             String string5 = card5.getRankAsString() + " of " + card5.getSuitAsString();
             Card card12 = (Card) queue2.dequeue(); //facedown card
@@ -157,7 +160,8 @@ public class War extends JFrame
                queue1.enqueue(card6); //add card from double war flip
                queue1.enqueue(card11);
                queue1.enqueue(card12);
-               return "After double war, " + string5 + " is greater than " + string6 + "--You win!";
+               return "DOUBLE WAR: " + string3 + " vs. " + string4 + "/n" +
+               "After double war, " + string5 + " is greater than " + string6 + "--You win!";
              }  
             if (card6.getRank() > card5.getRank())
              {
@@ -169,12 +173,12 @@ public class War extends JFrame
                queue2.enqueue(card6); //add card from double war flip
                queue2.enqueue(card11);
                queue2.enqueue(card12);
-               return "After double war, " + string6 + " is greater than " + string5 + "--CPU wins!";
+               return "DOUBLE WAR: " + string3 + " vs. " + string4 + "/n" +
+               "After double war, " + string6 + " is greater than " + string5 + "--CPU wins!";
              }  
             //triple war
             else
-               System.out.println("TRIPLE WAR: " + string5 + " vs. " + string6);
-               Card card13 = (Card) queue1.dequeue();
+               card13 = (Card) queue1.dequeue();
                Card card7 = (Card) queue1.dequeue();
                String string7 = card7.getRankAsString() + " of " + card7.getSuitAsString();
                Card card14 = (Card) queue2.dequeue();
@@ -192,7 +196,8 @@ public class War extends JFrame
                   queue1.enqueue(card8); //add card from triple war flip
                   queue1.enqueue(card13);
                   queue1.enqueue(card14);
-                  return string7 + " is greater than " + string8 + "--You win!";
+                  return "TRIPLE WAR: " + string5 + " vs. " + string6 + "/n" + 
+                  string7 + " is greater than " + string8 + "--You win!";
                 }  
                if (card8.getRank() > card7.getRank())
                 {
@@ -206,12 +211,13 @@ public class War extends JFrame
                   queue2.enqueue(card8); //add card from triple war flip
                   queue2.enqueue(card13);
                   queue2.enqueue(card14);
-                  return string8 + " is greater than " + string8 + "--CPU wins!";
+                  return "TRIPLE WAR: " + string5 + " vs. " + string6 + "/n" +
+                  string8 + " is greater than " + string7 + "--CPU wins!";
                 }  
                //quintuple war
                else
                   return "QUINTUPLE WAR! THIS IS CRAZY!" ;
-                  
+           } while (!queue1.isEmpty() && !queue2.isEmpty());        
    }//end flipCard1   
    
    //GUI
@@ -251,7 +257,6 @@ public class War extends JFrame
       
       //Create a button with caption "Go to War!"  
       flipButton = new JButton("Flip!");
-      
       //Add an action listener to the button
       flipButton.addActionListener(new FlipButtonListener());
       
