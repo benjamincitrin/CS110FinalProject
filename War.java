@@ -16,26 +16,29 @@ public class War
    QueueReferenceBased queue1; 
    QueueReferenceBased queue2;
    Deck1 deck; 
-     
+   
+  
    
    //main method
    public static void main(String[] args) 
    {
-      try 
-      {
+      
+      
          War w = new War();
          w.nonMain();
-      }
       
-      //queue is empty
+      
+      /*queue is empty
       catch (QueueException e)
-      {
-               System.out.println("ERROR");
-      }      
+      { 
+         System.out.println("ERROR");*/
+         
    }//end main method
 
    public void nonMain()
    {
+      try 
+      {
       //GUI
       final int WINDOW_WIDTH = 350;  //window width in pixels
       final int WINDOW_HEIGHT = 250; //window height in pixels
@@ -70,8 +73,16 @@ public class War
       
       if(queue2.isEmpty())
       {
-         System.out.println("You win the war");
-      }   
+         System.out.println("You've won the war!");
+      }
+      }//end try
+      catch (QueueException e)
+      {
+         if (!queue1.isEmpty())
+            System.out.println("Computer is out of cards--you've won the war!");  
+         if (!queue2.isEmpty()) 
+            System.out.println("You are out of cards--you have lost the war!");
+      }      
    }//end nonMain method
    
    //deal the cards
@@ -110,7 +121,7 @@ public class War
       if (card2.getRank() > card1.getRank())
        {  
          queue2.enqueue(card1); //add player card to CPU pile
-         queue1.enqueue(card2);
+         queue2.enqueue(card2);
          return string2 + " is greater than " + string1 + "--CPU wins!";
        }  
       //war      
@@ -119,83 +130,102 @@ public class War
          
          Card card3 = (Card) queue1.dequeue();
          String string3 = card3.getRankAsString() + " of " + card3.getSuitAsString();
+         Card card9 = (Card) queue1.dequeue(); //facedown card
          Card card4 = (Card) queue2.dequeue();
+         Card card10 = (Card) queue2.dequeue(); //facedown card
          String string4 = card4.getRankAsString() + " of " + card4.getSuitAsString();
          
          if (card3.getRank() > card4.getRank())
           { 
-            queue2.enqueue(card1);
+            queue1.enqueue(card1);
             queue1.enqueue(card2);
-            queue2.enqueue(card3); //add card from first flip
+            queue1.enqueue(card3); //add card from first flip
             queue1.enqueue(card4); //add card from war flip
+            queue1.enqueue(card9); //add card from war flip
+            queue1.enqueue(card10);
             return "After war, " + string3 + " is greater than " + string3 + "--You win!";
           }
             
          if (card4.getRank() > card3.getRank())
           {
             queue2.enqueue(card1);
-            queue1.enqueue(card2); //add card from first flip
+            queue2.enqueue(card2); //add card from first flip
             queue2.enqueue(card3);
-            queue1.enqueue(card4); //add card from war flip 
+            queue2.enqueue(card4); //add card from war flip 
+            queue2.enqueue(card9);
+            queue2.enqueue(card10);
             return "After war, " + string4 + " is greater than " + string3 + "--CPU wins!";
           }  
          //double war   
          else
             System.out.println("DOUBLE WAR: " + string3 + " vs. " + string4);
+            Card card11 = (Card) queue1.dequeue(); //facedown card
             Card card5 = (Card) queue1.dequeue();
             String string5 = card5.getRankAsString() + " of " + card5.getSuitAsString();
+            Card card12 = (Card) queue2.dequeue(); //facedown card
             Card card6 = (Card) queue2.dequeue();
             String string6 = card6.getRankAsString() + " of " + card6.getSuitAsString();
+            
          
             if (card5.getRank() > card6.getRank())
              {
-               queue2.enqueue(card1);
+               queue1.enqueue(card1);
                queue1.enqueue(card2); //add card from first flip
-               queue2.enqueue(card3);
+               queue1.enqueue(card3);
                queue1.enqueue(card4); //add card from war flip 
-               queue2.enqueue(card5);
+               queue1.enqueue(card5);
                queue1.enqueue(card6); //add card from double war flip
+               queue1.enqueue(card11);
+               queue1.enqueue(card12);
                return "After double war, " + string5 + " is greater than " + string6 + "--You win!";
              }  
-            if (card4.getRank() > card3.getRank())
+            if (card6.getRank() > card5.getRank())
              {
                queue2.enqueue(card1);
-               queue1.enqueue(card2); //add card from first flip
+               queue2.enqueue(card2); //add card from first flip
                queue2.enqueue(card3);
-               queue1.enqueue(card4); //add card from war flip 
+               queue2.enqueue(card4); //add card from war flip 
                queue2.enqueue(card5);
-               queue1.enqueue(card6); //add card from double war flip
+               queue2.enqueue(card6); //add card from double war flip
+               queue2.enqueue(card11);
+               queue2.enqueue(card12);
                return "After double war, " + string6 + " is greater than " + string5 + "--CPU wins!";
              }  
             //triple war
             else
                System.out.println("TRIPLE WAR: " + string5 + " vs. " + string6);
+               Card card13 = (Card) queue1.dequeue();
                Card card7 = (Card) queue1.dequeue();
                String string7 = card7.getRankAsString() + " of " + card7.getSuitAsString();
+               Card card14 = (Card) queue2.dequeue();
                Card card8 = (Card) queue2.dequeue();
                String string8 = card8.getRankAsString() + " of " + card8.getSuitAsString();
                if (card7.getRank() > card8.getRank())
                 {
-                  queue2.enqueue(card1); //add card from first flip
-                  queue2.enqueue(card3); //add card from war flip 
-                  queue2.enqueue(card5); //add card from double war flip
-                  queue2.enqueue(card7); //add card from triple war flip
-                  queue1.enqueue(card2); //add card from first flip
-                  queue1.enqueue(card4); //add card from war flip
-                  queue1.enqueue(card6); //add card from double war flip
+                  queue1.enqueue(card1); //add card from first flip
+                  queue1.enqueue(card2); //add card from war flip 
+                  queue1.enqueue(card3); //add card from double war flip
+                  queue1.enqueue(card4); //add card from triple war flip
+                  queue1.enqueue(card5); //add card from first flip
+                  queue1.enqueue(card6); //add card from war flip
+                  queue1.enqueue(card7); //add card from double war flip
                   queue1.enqueue(card8); //add card from triple war flip
+                  queue1.enqueue(card13);
+                  queue1.enqueue(card14);
                   return string7 + " is greater than " + string8 + "--You win!";
                 }  
-               if (card2.getRank() > card1.getRank())
+               if (card8.getRank() > card7.getRank())
                 {
                   queue2.enqueue(card1); //add card from first flip
-                  queue2.enqueue(card3); //add card from war flip 
-                  queue2.enqueue(card5); //add card from double war flip
-                  queue2.enqueue(card7); //add card from triple war flip
-                  queue1.enqueue(card2); //add card from first flip
-                  queue1.enqueue(card4); //add card from war flip
-                  queue1.enqueue(card6); //add card from double war flip
-                  queue1.enqueue(card8); //add card from triple war flip
+                  queue2.enqueue(card2); //add card from war flip 
+                  queue2.enqueue(card3); //add card from double war flip
+                  queue2.enqueue(card4); //add card from triple war flip
+                  queue2.enqueue(card5); //add card from first flip
+                  queue2.enqueue(card6); //add card from war flip
+                  queue2.enqueue(card7); //add card from double war flip
+                  queue2.enqueue(card8); //add card from triple war flip
+                  queue2.enqueue(card13);
+                  queue2.enqueue(card14);
                   return string8 + " is greater than " + string8 + "--CPU wins!";
                 }  
                //quintuple war
@@ -203,5 +233,13 @@ public class War
                   return "QUINTUPLE WAR! THIS IS CRAZY!" ;
                   
    }//end flipCard1   
-        
+   
+   /*compareError method
+   public String compareError()
+   {
+         if (!queue1.isEmpty())
+            return "Computer is out of cards--you've won the war!";  
+         else 
+            return "You are out of cards--you have lost the war!"; 
+   }//end compareError*/      
 }//end class
