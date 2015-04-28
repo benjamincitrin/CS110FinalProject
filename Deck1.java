@@ -1,9 +1,10 @@
 /**
- * Representation of a Deck of cards.  
- * Initialized to a standard 52 card deck. 
- *
- * @author Jackie Horton
- */
+Benjamin Citrin
+CS 110
+Assignment #10
+War
+Deck Class
+*/
 
 import java.util.Random;
 import java.util.ArrayList;

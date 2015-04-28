@@ -16,30 +16,45 @@ public class War
    //main method
    public static void main(String[] args) 
    {
-      War w = new War();
-      w.nonMain();
+      try 
+      {
+         War w = new War();
+         w.nonMain();
+      }
+      
+      //queue is empty
+      catch (QueueException e)
+      {
+               System.out.println("You are out of cards--computer wins!");
+      }      
    }//end main method
 
    public void nonMain()
    {
       //deal cards
       deal();
-      int i=1;
+ 
       while (!queue1.isEmpty() && !queue2.isEmpty()) 
       { 
          
          //flip first card
-         System.out.println("Me: " + flipCard1());
-         System.out.println("Card " + i);
-         i++;
-         System.out.println("CPU: " + flipCard2());
-         System.out.println("Card " + i);
-         i++;
+         System.out.println(flipCard1());
+  
+
       }//end while loop   
-      System.out.println("Cards remaining: " + deck.cardsRemaining());
+      
+      if(queue1.isEmpty())
+      {
+         System.out.println("CPU wins the war");
+      }
+      
+      if(queue2.isEmpty())
+      {
+         System.out.println("You win the war");
+      }   
    }//end 
    
-  
+   //deal the cards
    public void deal() 
    {
       //delcare variables
@@ -54,21 +69,98 @@ public class War
          queue1.enqueue(deck.dealCard());
          queue2.enqueue(deck.dealCard());
       }//end for loop 
-      
-   }//end deal method          
+   }//end deal method
    
-   
+             
    public String flipCard1()
    {
       Card card1 = (Card) queue1.dequeue();
-      return card1.getRankAsString() + " of " + card1.getSuitAsString();
-   }   
-   
-   
-   public String flipCard2()
-   {
+      String string1 = card1.getRankAsString() + " of " + card1.getSuitAsString();
       Card card2 = (Card) queue2.dequeue();
-      return card2.getRankAsString() + " of " + card2.getSuitAsString();
-   }   
+      String string2 = card2.getRankAsString() + " of " + card2.getSuitAsString();
+      //if player card is greater
+      if (card1.getRank() > card2.getRank())
+       {
+         queue1.enqueue(card2); //add CPU card to player pile
+         return string1 + " is greater than " + string2 + "--You win!";
+       }
+      //if CPU card is greater  
+      if (card2.getRank() > card1.getRank())
+       {  
+         queue2.enqueue(card1); //add player card to CPU pile
+         return string2 + " is greater than " + string1 + "--CPU wins!";
+       }  
+      //war      
+      else
+         System.out.println("WAR: " + string1 + " vs. " + string2);
          
+         Card card3 = (Card) queue1.dequeue();
+         String string3 = card3.getRankAsString() + " of " + card3.getSuitAsString();
+         Card card4 = (Card) queue2.dequeue();
+         String string4 = card4.getRankAsString() + " of " + card4.getSuitAsString();
+         
+         if (card3.getRank() > card4.getRank())
+          { 
+            queue1.enqueue(card2); //add card from first flip
+            queue1.enqueue(card4); //add card from war flip
+            return "After war, " + string3 + " is greater than " + string3 + "--You win!";
+          }
+            
+         if (card4.getRank() > card3.getRank())
+          {
+            queue2.enqueue(card1); //add card from first flip
+            queue2.enqueue(card3); //add card from war flip 
+            return "After war, " + string4 + " is greater than " + string3 + "--CPU wins!";
+          }  
+         //double war   
+         else
+            System.out.println("DOUBLE WAR: " + string3 + " vs. " + string4);
+            Card card5 = (Card) queue1.dequeue();
+            String string5 = card5.getRankAsString() + " of " + card5.getSuitAsString();
+            Card card6 = (Card) queue2.dequeue();
+            String string6 = card6.getRankAsString() + " of " + card6.getSuitAsString();
+         
+            if (card5.getRank() > card6.getRank())
+             {
+               queue1.enqueue(card2); //add card from first flip
+               queue1.enqueue(card4); //add card from war flip
+               queue1.enqueue(card6); //add card from double war flip
+               return "After double war, " + string5 + " is greater than " + string6 + "--You win!";
+             }  
+            if (card4.getRank() > card3.getRank())
+             {
+               queue2.enqueue(card1); //add card from first flip
+               queue2.enqueue(card3); //add card from war flip 
+               queue2.enqueue(card5); //add card from double war flip
+               return "After double war, " + string6 + " is greater than " + string5 + "--CPU wins!";
+             }  
+            //triple war
+            else
+               System.out.println("TRIPLE WAR: " + string5 + " vs. " + string6);
+               Card card7 = (Card) queue1.dequeue();
+               String string7 = card7.getRankAsString() + " of " + card7.getSuitAsString();
+               Card card8 = (Card) queue2.dequeue();
+               String string8 = card8.getRankAsString() + " of " + card8.getSuitAsString();
+               if (card7.getRank() > card8.getRank())
+                {
+                  queue1.enqueue(card2); //add card from first flip
+                  queue1.enqueue(card4); //add card from war flip
+                  queue1.enqueue(card6); //add card from double war flip
+                  queue1.enqueue(card8); //add card from triple war flip
+                  return string7 + " is greater than " + string8 + "--You win!";
+                }  
+               if (card2.getRank() > card1.getRank())
+                {
+                  queue2.enqueue(card1); //add card from first flip
+                  queue2.enqueue(card3); //add card from war flip 
+                  queue2.enqueue(card5); //add card from double war flip
+                  queue2.enqueue(card7); //add card from triple war flip
+                  return string8 + " is greater than " + string8 + "--CPU wins!";
+                }  
+               //quintuple war
+               else
+                  return "QUINTUPLE WAR! THIS IS CRAZY!" ;
+                  
+   }//end flipCard1   
+        
 }//end class
