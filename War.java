@@ -216,7 +216,7 @@ public class War extends JFrame
                 }  
                //quintuple war
                else
-                  return "QUINTUPLE WAR! THIS IS CRAZY!" ;
+                  return "QUADRUPLE WAR! THIS IS CRAZY!" ;
            } while (!queue1.isEmpty() && !queue2.isEmpty());        
    }//end flipCard1   
    
@@ -225,7 +225,7 @@ public class War extends JFrame
    {
       try 
       {
-      final int WINDOW_WIDTH = 350;  //window width in pixels
+      final int WINDOW_WIDTH = 450;  //window width in pixels
       final int WINDOW_HEIGHT = 250; //window height in pixels
       
       //create the window w/ label and size
@@ -257,14 +257,18 @@ public class War extends JFrame
       
       //Create a button with caption "Go to War!"  
       flipButton = new JButton("Flip!");
+      
+      ImageIcon back = new ImageIcon("cardpics//back.jpg");
+      JLabel warCard = new JLabel(back);
+    
       //Add an action listener to the button
       flipButton.addActionListener(new FlipButtonListener());
-      
       //Create a JPanel object and let the panel field reference it
       panel = new JPanel();
       
       //Add the label and button components to the panel
       panel.add(label);
+      panel.add(warCard);
       panel.add(flipButton);   
    }      
    
