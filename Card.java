@@ -55,19 +55,19 @@ public class Card
     {
       if (suit == SPADES)
       {
-      return "Spades";
+      return "spades";
       }
       if (suit == CLUBS)
       {
-      return "Clubs";
+      return "clubs";
       }
       if (suit == HEARTS)
       {
-      return "Hearts";
+      return "hearts";
       } 
       else
       {
-      return "Diamonds";
+      return "diamonds";
       }  
    }
    
@@ -78,7 +78,7 @@ public class Card
    {
          if (rank == 1)
          {
-         return "Ace";
+         return "ace";
          }
          if (rank == 2)
          {
@@ -118,15 +118,15 @@ public class Card
          }
          if (rank == 11)
          {
-         return "Jack";
+         return "jack";
          }
          if (rank == 12)
          {
-         return "Queen";
+         return "queen";
          }
          else 
          {
-         return "King";
+         return "king";
          }
       }
    
