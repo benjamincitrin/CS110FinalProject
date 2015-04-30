@@ -421,12 +421,12 @@ public class War extends Deal
          String s = w.flipCard1();
          String p = w.getCardPicsPlayer();
          String c = w.getCardPicsCPU();
+         //System.out.println(w.flipCard1());
          //display the flip
          ImageIcon iconPlayer = new ImageIcon("cardpics//" + p + ".jpg"); 
          ImageIcon iconCPU = new ImageIcon("cardpics//" + c + ".jpg");
          JOptionPane.showMessageDialog(null, new JLabel(s, iconCPU, JLabel.LEFT),
-                                       "War", JOptionPane.INFORMATION_MESSAGE,iconPlayer);
-         w.flipCard1();                              
+                                       "War", JOptionPane.INFORMATION_MESSAGE,iconPlayer);                              
          }
          catch(QueueException f)
          {} 
